@@ -1,6 +1,9 @@
 #ifndef FILE_SYSTEM_H
 #define FILE_SYSTEM_H
 
+#include <QString>
+#include <QVector>
+
 typedef enum vfs_limits
 {
     max_files = 5,
@@ -20,27 +23,30 @@ typedef enum node_type
     directory
 } ntype;
 
-typedef enum node_ops
-{
-    add_file,
-    delete_file,
-    print_file
-} nops;
-
 typedef struct inode
 {
-    drive_t n_drive;
+    ntype   n_type;
     QString n_name;
-    QString n_ext;
     QString n_data;
 } inode_t;
 
+typedef struct node_ops
+{
+    void (*add_inode)(inode_t *);
+    void (*delete_inode)(inode_t *);
+    void (*print_inode)(inode_t);
+} nops;
+
 typedef struct vnode
 {
-    ntype   n_type;
-    nops    n_ops;
+    drive_t n_drive;
     inode_t n_inode;
+    nops    n_ops;
 } vnode_t;
+
+void add_inode(inode_t *);
+void delete_inode(inode_t *);
+void print_inode(inode_t *);
 
 #endif // FILE_SYSTEM_H
 
