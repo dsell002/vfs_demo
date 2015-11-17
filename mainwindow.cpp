@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "file_system.h"
-#include<iostream>
+#include <iostream>
+#include <QDebug>
 using namespace std;
 
 QList<vnode_t> block_a;
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    selected_widget = item;
 }
 
 MainWindow::~MainWindow()
@@ -20,23 +23,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_addPushButton_clicked()
 {
-    if(ui->lineEdit->text() != NULL)
+    if(ui->addFileLineEdit->text() != NULL)
     {
         vnode v_obj;
 
         v_obj.n_inode.n_type = file;
-        v_obj.n_inode.n_name = ui->lineEdit->text();
-        v_obj.n_inode.n_data = ui->lineEditContents->text();
+        v_obj.n_inode.n_name = ui->addFileLineEdit->text();
+        v_obj.n_inode.n_data = ui->contentsLineEdit->text();
 
         block_a.append(v_obj);
 
-        QListWidgetItem file_list;;
-        file_list.setText(v_obj.n_inode.n_name);
-
-        ui->listWidget->addItem(file_list.text());
-        ui->comboBoxDelete->addItem(file_list.text());
-        ui->comboBoxPrint->addItem(file_list.text());
-        MainWindow::addTreeRoot(file_list.text(), file_list.text());
+        ui->comboBoxDelete->addItem(ui->addFileLineEdit->text());
+        ui->comboBoxPrint->addItem(ui->addFileLineEdit->text());
+        MainWindow::addTreeRoot(ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
     }
 }
 
@@ -50,13 +49,6 @@ void MainWindow::on_deletePushButton_clicked()
             {
                 cout << "Found file at position " << i << endl;
                 block_a.removeAt(i);
-            }
-        }
-        for (int i = 0; i < ui->listWidget->count(); ++i)
-        {
-            if (ui->listWidget->item(i)->text() == (ui->comboBoxDelete->currentText()))
-            {
-                delete ui->listWidget->item(i);
             }
         }
         for (int i = 0; i < ui->comboBoxPrint->count(); ++i)
@@ -73,7 +65,7 @@ void MainWindow::on_deletePushButton_clicked()
 void MainWindow::addTreeRoot(QString name, QString description)
 {
     // QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-    QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->treeWidget_2);
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->vfsTreeWidget);
 
     // QTreeWidgetItem::setText(int column, const QString & text)
     treeItem->setText(0, name);
@@ -108,4 +100,17 @@ void MainWindow::on_printPushButton_clicked()
         }
     }
 
+}
+
+void MainWindow::on_vfsTreeWidget_activated(const QModelIndex &index)
+{
+
+}
+
+void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
+{
+    qDebug() << "test" << item->text(column);
+    ui->driveATreeWidget->findItems(item->text(column),0,0);
+    selected_widget = item;
+    qDebug() << selected_widget->text(column);
 }

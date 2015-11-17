@@ -27,7 +27,7 @@
        <item>
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="addFile">
           <attribute name="title">
@@ -54,7 +54,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit">
+            <widget class="QLineEdit" name="addFileLineEdit">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -83,7 +83,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditContents">
+            <widget class="QLineEdit" name="contentsLineEdit">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -169,8 +169,31 @@
           <attribute name="title">
            <string>Print File Contents</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="2" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Select File to Print</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxPrint">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="printPushButton">
              <property name="minimumSize">
               <size>
@@ -189,36 +212,13 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item>
             <widget class="QLineEdit" name="lineEditPrint">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>25</height>
               </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QComboBox" name="comboBoxPrint">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Select File to Print</string>
              </property>
             </widget>
            </item>
@@ -243,21 +243,115 @@
            </widget>
           </item>
           <item>
-           <widget class="QTreeWidget" name="treeWidget_2">
+           <widget class="QTreeWidget" name="vfsTreeWidget">
+            <property name="tabKeyNavigation">
+             <bool>true</bool>
+            </property>
             <property name="showDropIndicator" stdset="0">
              <bool>false</bool>
             </property>
-            <property name="itemsExpandable">
+            <property name="rootIsDecorated">
+             <bool>true</bool>
+            </property>
+            <property name="uniformRowHeights">
              <bool>false</bool>
             </property>
+            <property name="itemsExpandable">
+             <bool>true</bool>
+            </property>
             <property name="expandsOnDoubleClick">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <column>
              <property name="text">
               <string>/</string>
              </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
             </column>
+            <item>
+             <property name="text">
+              <string>etc</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>tmp</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>bin</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>logs</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>conf</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>usr</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+             <item>
+              <property name="text">
+               <string>local</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+              </property>
+              <item>
+               <property name="text">
+                <string>web</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+               </property>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>data</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+              </property>
+             </item>
+            </item>
            </widget>
           </item>
          </layout>
@@ -292,7 +386,35 @@
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget"/>
+           <widget class="QTreeWidget" name="driveATreeWidget">
+            <column>
+             <property name="text">
+              <string>/</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </column>
+            <item>
+             <property name="text">
+              <string>tmp</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>bin</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -314,7 +436,35 @@
            </widget>
           </item>
           <item>
-           <widget class="QTreeWidget" name="treeWidget"/>
+           <widget class="QTreeWidget" name="driveBTreeWidget">
+            <column>
+             <property name="text">
+              <string>/</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </column>
+            <item>
+             <property name="text">
+              <string>logs</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>conf</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -336,7 +486,62 @@
            </widget>
           </item>
           <item>
-           <widget class="QTreeWidget" name="treeWidget_3"/>
+           <widget class="QTreeWidget" name="driveCTreeWidget">
+            <column>
+             <property name="text">
+              <string>/</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </column>
+            <item>
+             <property name="text">
+              <string>etc</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>usr</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+             </property>
+             <item>
+              <property name="text">
+               <string>local</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+              </property>
+              <item>
+               <property name="text">
+                <string>web</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+               </property>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>data</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resource.qrc">
+                <normaloff>:/resources/dir_img.png</normaloff>:/resources/dir_img.png</iconset>
+              </property>
+             </item>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -379,7 +584,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
