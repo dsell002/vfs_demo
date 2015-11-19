@@ -5,7 +5,7 @@
 #include <QDebug>
 using namespace std;
 
-QList<vnode_t> block_a;
+vfs_t vfs;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -31,11 +31,11 @@ void MainWindow::on_addPushButton_clicked()
         v_obj.n_inode.n_name = ui->addFileLineEdit->text();
         v_obj.n_inode.n_data = ui->contentsLineEdit->text();
 
-        block_a.append(v_obj);
+        vfs.a_drive.append(v_obj);
 
         ui->comboBoxDelete->addItem(ui->addFileLineEdit->text());
         ui->comboBoxPrint->addItem(ui->addFileLineEdit->text());
-        MainWindow::addTreeRoot(ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
+        MainWindow::addTreeChild(selected_widget, ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
     }
 }
 
@@ -43,12 +43,12 @@ void MainWindow::on_deletePushButton_clicked()
 {
     if(ui->comboBoxDelete->currentText() != NULL)
     {
-        for (int i = 0; i < block_a.size(); ++i)
+        for (int i = 0; i < vfs.a_drive.size(); ++i)
         {
-            if (block_a.at(i).n_inode.n_name == (ui->comboBoxDelete->currentText()))
+            if (vfs.a_drive.at(i).n_inode.n_name == (ui->comboBoxDelete->currentText()))
             {
                 cout << "Found file at position " << i << endl;
-                block_a.removeAt(i);
+                vfs.a_drive.removeAt(i);
             }
         }
         for (int i = 0; i < ui->comboBoxPrint->count(); ++i)
@@ -68,10 +68,10 @@ void MainWindow::addTreeRoot(QString name, QString description)
     QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->vfsTreeWidget);
 
     // QTreeWidgetItem::setText(int column, const QString & text)
-    treeItem->setText(0, name);
-    treeItem->setText(1, description);
-    addTreeChild(treeItem, name + "A", "Child_first");
-    addTreeChild(treeItem, name + "B", "Child_second");
+//    treeItem->setText(0, name);
+//    treeItem->setText(1, description);
+
+    addTreeChild(selected_widget, name, "file");
 }
 
 void MainWindow::addTreeChild(QTreeWidgetItem *parent,
@@ -86,17 +86,16 @@ void MainWindow::addTreeChild(QTreeWidgetItem *parent,
 
     // QTreeWidgetItem::addChild(QTreeWidgetItem * child)
     parent->addChild(treeItem);
-    treeItem->setText(2, "test");
-    parent->child(0)->addChild(treeItem);
+
 }
 
 void MainWindow::on_printPushButton_clicked()
 {
-    for (int i = 0; i < block_a.size(); ++i)
+    for (int i = 0; i < vfs.a_drive.size(); ++i)
     {
-        if (block_a.at(i).n_inode.n_name == (ui->comboBoxPrint->currentText()))
+        if (vfs.a_drive.at(i).n_inode.n_name == (ui->comboBoxPrint->currentText()))
         {
-            ui->lineEditPrint->setText(block_a.at(i).n_inode.n_data);
+            ui->lineEditPrint->setText(vfs.a_drive.at(i).n_inode.n_data);
         }
     }
 
@@ -109,7 +108,7 @@ void MainWindow::on_vfsTreeWidget_activated(const QModelIndex &index)
 
 void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
 {
-    qDebug() << "test" << item->text(column);
+    ui->vfsTreeWidget->findItems(item->text(column),0,0);
     ui->driveATreeWidget->findItems(item->text(column),0,0);
     selected_widget = item;
     qDebug() << selected_widget->text(column);

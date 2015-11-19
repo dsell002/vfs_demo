@@ -2,7 +2,7 @@
 #define FILE_SYSTEM_H
 
 #include <QString>
-#include <QVector>
+#include <QList>
 
 typedef enum vfs_limits
 {
@@ -43,6 +43,13 @@ typedef struct vnode
     inode_t n_inode;
     nops    n_ops;
 } vnode_t;
+
+typedef struct vir_file_sys
+{
+    QList<vnode_t> a_drive;
+    QList<vnode_t> b_drive;
+    QList<vnode_t> c_drive;
+} vfs_t;
 
 void add_inode(inode_t *);
 void delete_inode(inode_t *);
