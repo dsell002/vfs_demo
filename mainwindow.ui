@@ -26,6 +26,12 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="maximumSize">
+          <size>
+           <width>400</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -49,12 +55,29 @@
               </size>
              </property>
              <property name="text">
-              <string>File Name</string>
+              <string>File Name (Select folder, on right, in which to create file)</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLineEdit" name="addFileLineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>File Path</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="pathLineEdit">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -387,6 +410,12 @@
           </item>
           <item>
            <widget class="QTreeWidget" name="driveATreeWidget">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::NoSelection</enum>
+            </property>
             <column>
              <property name="text">
               <string>/</string>
@@ -437,6 +466,12 @@
           </item>
           <item>
            <widget class="QTreeWidget" name="driveBTreeWidget">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::NoSelection</enum>
+            </property>
             <column>
              <property name="text">
               <string>/</string>
@@ -487,6 +522,12 @@
           </item>
           <item>
            <widget class="QTreeWidget" name="driveCTreeWidget">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::NoSelection</enum>
+            </property>
             <column>
              <property name="text">
               <string>/</string>
@@ -601,6 +642,54 @@
     <hint type="destinationlabel">
      <x>322</x>
      <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vfsTreeWidget</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>driveATreeWidget</receiver>
+   <slot>clearSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>140</x>
+     <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vfsTreeWidget</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>driveBTreeWidget</receiver>
+   <slot>clearSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>390</x>
+     <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vfsTreeWidget</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>driveCTreeWidget</receiver>
+   <slot>clearSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>432</y>
     </hint>
    </hints>
   </connection>

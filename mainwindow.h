@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QTreeWidgetItem *selected_widget;
+    QTreeWidgetItem *selected_widget, *drive_item;
 
     void addTreeRoot(QString name, QString description);
     void addTreeChild(QTreeWidgetItem *parent,

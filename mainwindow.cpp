@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QTreeWidgetItem *item = new QTreeWidgetItem();
     selected_widget = item;
+
+    QTreeWidgetItem *d_item = new QTreeWidgetItem();
+    drive_item = d_item;
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +39,7 @@ void MainWindow::on_addPushButton_clicked()
         ui->comboBoxDelete->addItem(ui->addFileLineEdit->text());
         ui->comboBoxPrint->addItem(ui->addFileLineEdit->text());
         MainWindow::addTreeChild(selected_widget, ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
+        MainWindow::addTreeChild(drive_item, ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
     }
 }
 
@@ -108,8 +112,39 @@ void MainWindow::on_vfsTreeWidget_activated(const QModelIndex &index)
 
 void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
 {
+    QString path;
+    QList<QTreeWidgetItem*> drive_ptr;
     ui->vfsTreeWidget->findItems(item->text(column),0,0);
-    ui->driveATreeWidget->findItems(item->text(column),0,0);
+    drive_ptr = ui->driveATreeWidget->findItems(item->text(column),Qt::MatchContains | Qt::MatchRecursive,0);
+    if (drive_ptr.isEmpty() == 0)
+    {
+        drive_ptr.at(0)->setSelected(true);
+        drive_item = drive_ptr.at(0);
+    }
+    else
+    {
+        drive_ptr = ui->driveBTreeWidget->findItems(item->text(column),Qt::MatchContains | Qt::MatchRecursive,0);
+        if (drive_ptr.isEmpty() == 0)
+        {
+            drive_ptr.at(0)->setSelected(true);
+            drive_item = drive_ptr.at(0);
+        }
+        else
+        {
+            drive_ptr = ui->driveCTreeWidget->findItems(item->text(column),Qt::MatchContains | Qt::MatchRecursive,0);
+            if (drive_ptr.isEmpty() == 0)
+            {
+                drive_ptr.at(0)->setSelected(true);
+                drive_item = drive_ptr.at(0);
+            }
+        }
+    }
     selected_widget = item;
-    qDebug() << selected_widget->text(column);
+    path.append(item->text(column));
+    while(item->parent())
+    {
+        item = item->parent();
+        path.prepend(item->text(0)+"/");
+    }
+    ui->pathLineEdit->setText("/"+path+"/");
 }
