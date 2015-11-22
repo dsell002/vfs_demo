@@ -28,67 +28,47 @@ void MainWindow::on_addPushButton_clicked()
 {
     if(ui->addFileLineEdit->text() != NULL)
     {
-        vnode v_obj;
+        for (int i = 0; i < selected_widget->childCount(); ++i)
+        {
+            if(selected_widget->child(i)->text(0) == ui->addFileLineEdit->text()+".txt")
+                return;
+        }
+        vnode_t v_obj;
 
         v_obj.n_inode.n_type = file;
         v_obj.n_inode.n_name = ui->addFileLineEdit->text();
-        v_obj.n_inode.n_data = ui->contentsLineEdit->text();
+        v_obj.n_inode.n_extension = "txt";
+        v_obj.n_inode.n_data = v_obj.n_inode.n_name+".txt contents";
+        v_obj.n_item = ui->vfsTreeWidget->currentItem();
+
+        QString file_display;
+        file_display = v_obj.n_inode.n_name+"."+v_obj.n_inode.n_extension;
 
         vfs.a_drive.append(v_obj);
 
-        ui->comboBoxDelete->addItem(ui->addFileLineEdit->text());
-        ui->comboBoxPrint->addItem(ui->addFileLineEdit->text());
-        MainWindow::addTreeChild(selected_widget, ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
-        MainWindow::addTreeChild(drive_item, ui->addFileLineEdit->text(), ui->contentsLineEdit->text());
+        MainWindow::addTreeChild(selected_widget,
+                                 file_display,
+                                 v_obj.n_inode.n_data);
+        MainWindow::addTreeChild(drive_item,
+                                 file_display,
+                                 v_obj.n_inode.n_data);
     }
 }
 
 void MainWindow::on_deletePushButton_clicked()
 {
-    if(ui->comboBoxDelete->currentText() != NULL)
-    {
-        for (int i = 0; i < vfs.a_drive.size(); ++i)
-        {
-            if (vfs.a_drive.at(i).n_inode.n_name == (ui->comboBoxDelete->currentText()))
-            {
-                cout << "Found file at position " << i << endl;
-                vfs.a_drive.removeAt(i);
-            }
-        }
-        for (int i = 0; i < ui->comboBoxPrint->count(); ++i)
-        {
-            if (ui->comboBoxPrint->currentText() == (ui->comboBoxDelete->currentText()))
-            {
-                ui->comboBoxPrint->removeItem(i);
-            }
-        }
-        ui->comboBoxDelete->removeItem(ui->comboBoxDelete->currentIndex());
-    }
-}
-
-void MainWindow::addTreeRoot(QString name, QString description)
-{
-    // QTreeWidgetItem(QTreeWidget * parent, int type = Type)
-    QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->vfsTreeWidget);
-
-    // QTreeWidgetItem::setText(int column, const QString & text)
-//    treeItem->setText(0, name);
-//    treeItem->setText(1, description);
-
-    addTreeChild(selected_widget, name, "file");
+    if(ui->vfsTreeWidget->currentItem()->text(0).contains("txt"))
+        delete ui->vfsTreeWidget->currentItem();
 }
 
 void MainWindow::addTreeChild(QTreeWidgetItem *parent,
                   QString name, QString description)
 {
-    // QTreeWidgetItem(QTreeWidget * parent, int type = Type)
     QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 
-    // QTreeWidgetItem::setText(int column, const QString & text)
     treeItem->setText(0, name);
     treeItem->setText(1, description);
 
-    // QTreeWidgetItem::addChild(QTreeWidgetItem * child)
     parent->addChild(treeItem);
 
 }
@@ -97,7 +77,7 @@ void MainWindow::on_printPushButton_clicked()
 {
     for (int i = 0; i < vfs.a_drive.size(); ++i)
     {
-        if (vfs.a_drive.at(i).n_inode.n_name == (ui->comboBoxPrint->currentText()))
+        if (vfs.a_drive.at(i).n_inode.n_name+".txt" == ui->vfsTreeWidget->currentItem()->text(0))
         {
             ui->lineEditPrint->setText(vfs.a_drive.at(i).n_inode.n_data);
         }
@@ -105,15 +85,12 @@ void MainWindow::on_printPushButton_clicked()
 
 }
 
-void MainWindow::on_vfsTreeWidget_activated(const QModelIndex &index)
-{
-
-}
-
 void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
 {
     QString path;
     QList<QTreeWidgetItem*> drive_ptr;
+    ui->deleteFileLineEdit->setText(item->text(column));
+    ui->printFileLineEdit->setText(item->text(column));
     ui->vfsTreeWidget->findItems(item->text(column),0,0);
     drive_ptr = ui->driveATreeWidget->findItems(item->text(column),Qt::MatchContains | Qt::MatchRecursive,0);
     if (drive_ptr.isEmpty() == 0)
@@ -147,4 +124,9 @@ void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
         path.prepend(item->text(0)+"/");
     }
     ui->pathLineEdit->setText("/"+path+"/");
+}
+
+void MainWindow::on_vfsTreeWidget_itemChanged(QTreeWidgetItem *item, int column)
+{
+
 }

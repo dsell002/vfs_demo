@@ -23,15 +23,14 @@ private slots:
 
     void on_printPushButton_clicked();
 
-    void on_vfsTreeWidget_activated(const QModelIndex &index);
-
     void on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column);
+
+    void on_vfsTreeWidget_itemChanged(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;
     QTreeWidgetItem *selected_widget, *drive_item;
 
-    void addTreeRoot(QString name, QString description);
     void addTreeChild(QTreeWidgetItem *parent,
                       QString name, QString description);
 };

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QList>
+#include <QTreeWidgetItem>
 
 typedef enum vfs_limits
 {
@@ -27,21 +28,23 @@ typedef struct inode
 {
     ntype   n_type;
     QString n_name;
+    QString n_extension;
     QString n_data;
 } inode_t;
 
 typedef struct node_ops
 {
-    void (*add_inode)(inode_t *);
-    void (*delete_inode)(inode_t *);
-    void (*print_inode)(inode_t);
+    void (*add_node)(inode_t *);
+    void (*delete_node)(inode_t *);
+    void (*print_node)(inode_t);
 } nops;
 
 typedef struct vnode
 {
-    drive_t n_drive;
-    inode_t n_inode;
-    nops    n_ops;
+    drive_t          n_drive;
+    inode_t          n_inode;
+    nops             n_ops;
+    QTreeWidgetItem *n_item;
 } vnode_t;
 
 typedef struct vir_file_sys
@@ -51,9 +54,10 @@ typedef struct vir_file_sys
     QList<vnode_t> c_drive;
 } vfs_t;
 
-void add_inode(inode_t *);
-void delete_inode(inode_t *);
-void print_inode(inode_t *);
+void init_fsys(vfs_t *);
+void add_node(vnode_t *);
+void delete_node(vnode_t *);
+void print_node(vnode_t *);
 
 #endif // FILE_SYSTEM_H
 
