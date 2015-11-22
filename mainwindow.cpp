@@ -70,9 +70,11 @@ void MainWindow::addTreeChild(QTreeWidgetItem *parent,
 
     treeItem->setText(0, name);
     treeItem->setText(1, description);
+    QIcon icon;
+    icon.addFile(QStringLiteral(":/resources/text.png"), QSize(), QIcon::Normal, QIcon::Off);
+    treeItem->setIcon(0, icon);
 
     parent->addChild(treeItem);
-
 }
 
 void MainWindow::on_printPushButton_clicked()
