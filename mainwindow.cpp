@@ -6,6 +6,7 @@
 using namespace std;
 
 vfs_t vfs;
+QString selected_path;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,7 +27,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_addPushButton_clicked()
 {
-    if(ui->addFileLineEdit->text() != NULL)
+    if((ui->addFileLineEdit->text() != NULL) &
+            !(selected_widget->text(0).contains("txt")))
     {
         for (int i = 0; i < selected_widget->childCount(); ++i)
         {
@@ -38,7 +40,7 @@ void MainWindow::on_addPushButton_clicked()
         v_obj.n_inode.n_type = file;
         v_obj.n_inode.n_name = ui->addFileLineEdit->text();
         v_obj.n_inode.n_extension = "txt";
-        v_obj.n_inode.n_data = v_obj.n_inode.n_name+".txt contents";
+        v_obj.n_inode.n_data = selected_path+v_obj.n_inode.n_name+".txt contents";
         v_obj.n_item = ui->vfsTreeWidget->currentItem();
 
         QString file_display;
@@ -124,6 +126,7 @@ void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
         path.prepend(item->text(0)+"/");
     }
     ui->pathLineEdit->setText("/"+path+"/");
+    selected_path = "/"+path+"/";
 }
 
 void MainWindow::on_vfsTreeWidget_itemChanged(QTreeWidgetItem *item, int column)
