@@ -624,49 +624,49 @@
   </connection>
   <connection>
    <sender>vfsTreeWidget</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <signal>itemSelectionChanged()</signal>
    <receiver>driveATreeWidget</receiver>
    <slot>clearSelection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>183</y>
+     <y>172</y>
     </hint>
     <hint type="destinationlabel">
      <x>140</x>
-     <y>432</y>
+     <y>421</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>vfsTreeWidget</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <signal>itemSelectionChanged()</signal>
    <receiver>driveBTreeWidget</receiver>
    <slot>clearSelection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>183</y>
+     <y>172</y>
     </hint>
     <hint type="destinationlabel">
      <x>390</x>
-     <y>432</y>
+     <y>421</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>vfsTreeWidget</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <signal>itemSelectionChanged()</signal>
    <receiver>driveCTreeWidget</receiver>
    <slot>clearSelection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>183</y>
+     <y>172</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
-     <y>432</y>
+     <y>421</y>
     </hint>
    </hints>
   </connection>

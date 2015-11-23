@@ -23,13 +23,12 @@ private slots:
 
     void on_printPushButton_clicked();
 
-    void on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column);
-
-    void on_vfsTreeWidget_itemChanged(QTreeWidgetItem *item, int column);
+    void on_vfsTreeWidget_itemSelectionChanged();
 
 private:
     Ui::MainWindow *ui;
     QTreeWidgetItem *selected_widget, *drive_item;
+    QList<QTreeWidgetItem*> drive_ptr;
 
     void addTreeChild(QTreeWidgetItem *parent,
                       QString name, QString description);

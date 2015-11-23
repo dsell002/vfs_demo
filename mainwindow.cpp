@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QTreeWidgetItem *d_item = new QTreeWidgetItem();
     drive_item = d_item;
+
+    QList<QTreeWidgetItem*> d_ptr;
+    drive_ptr = d_ptr;
 }
 
 MainWindow::~MainWindow()
@@ -60,7 +63,10 @@ void MainWindow::on_addPushButton_clicked()
 void MainWindow::on_deletePushButton_clicked()
 {
     if(ui->vfsTreeWidget->currentItem()->text(0).contains("txt"))
+    {
+        delete drive_ptr.at(0);
         delete ui->vfsTreeWidget->currentItem();
+    }
 }
 
 void MainWindow::addTreeChild(QTreeWidgetItem *parent,
@@ -89,13 +95,16 @@ void MainWindow::on_printPushButton_clicked()
 
 }
 
-void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
+void MainWindow::on_vfsTreeWidget_itemSelectionChanged()
 {
     QString path;
-    QList<QTreeWidgetItem*> drive_ptr;
+    QTreeWidgetItem *item;
+    int column = 0;
+    item = ui->vfsTreeWidget->currentItem();
+
     ui->deleteFileLineEdit->setText(item->text(column));
     ui->printFileLineEdit->setText(item->text(column));
-    ui->vfsTreeWidget->findItems(item->text(column),0,0);
+    //ui->vfsTreeWidget->findItems(item->text(column),0,0);
     drive_ptr = ui->driveATreeWidget->findItems(item->text(column),Qt::MatchContains | Qt::MatchRecursive,0);
     if (drive_ptr.isEmpty() == 0)
     {
@@ -129,9 +138,4 @@ void MainWindow::on_vfsTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
     }
     ui->pathLineEdit->setText("/"+path+"/");
     selected_path = "/"+path+"/";
-}
-
-void MainWindow::on_vfsTreeWidget_itemChanged(QTreeWidgetItem *item, int column)
-{
-
 }
